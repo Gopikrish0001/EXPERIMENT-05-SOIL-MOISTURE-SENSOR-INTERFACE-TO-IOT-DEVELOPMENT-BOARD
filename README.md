@@ -1,4 +1,8 @@
 # EXPERIMENT-05-SOIL-MOISTURE-SENSOR-INTERFACE-TO-IOT-DEVELOPMENT-BOARD
+## DATE  :02.03.2026
+## NAME  :GOPIKRISHNSN M
+## REGNO :212223043001
+## DEPARTMENT :BE-CSE
 
 ## Aim: 
 
@@ -107,13 +111,60 @@ GND is the ground pin.
 
 
 ## STM 32 CUBE PROGRAM :
+```
+#include "main.h"
+#include "stdio.h"
 
+#if defined(__GNUC__)
+#define PUTCHAR_PROTOTYPE int __io_putchar(int ch)
+#endif
+uint32_t readvalue;
+
+
+int main(void)
+{
+
+  
+  HAL_Init();
+
+  SystemClock_Config();
+
+
+  MX_GPIO_Init();
+  MX_ADC_Init();
+  MX_USART2_UART_Init();
+
+  
+  while (1)
+  {
+	  HAL_ADC_Start(&hadc);
+	  HAL_ADC_PollForConversion(&hadc, HAL_MAX_DELAY);
+	  readvalue = HAL_ADC_GetValue(&hadc);
+	  printf("Read value : %ld\n", readvalue);
+	  uint32_t soilmoist = 100 - (readvalue / 40.95);
+	  printf("Soil moisture : %ld %%\n", soilmoist);
+	  HAL_Delay(1000);
+
+	    }
+
+	  }
+	  PUTCHAR_PROTOTYPE
+	  {
+	  	HAL_UART_Transmit(&huart2,(uint8_t*)&ch,1,0xFFFF);
+	  	return ch;
+	  }
+```
 
 
 ## Output screen shots on serial monitor   :
+ <img width="1920" height="1200" alt="Screenshot (413)" src="https://github.com/user-attachments/assets/c5adb084-a292-4845-a8c2-c671396b3809" />
+
+
  
- 
- 
- 
+## Circuit board   :
+![soilmoisture](https://github.com/user-attachments/assets/b32db9ae-3b18-467a-a43e-e80bf51fd463)
+
+
+
 ## Result :
 Interfacing a Analog Input (soil moisture sensor) with ARM microcontroller based IOT development is executed and the results visualized on serial monitor 
